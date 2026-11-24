@@ -1,87 +1,80 @@
-<?php 
+<?php
 
-require_once  _DIR_ . "/../models/UsuarioModel.php";
+require_once __DIR__ . "/../models/UsuarioModel.php";
 
 function teste(){
     echo json_encode([
-       "mensagem" => "back-end respondendo com sucesso!"
-    ]);
-    exist;
+        "mensagem" => "Back-end respondedo com sucesso!"
+        ]);
+    exit;
 }
-//RECEBE E VALIDA OS DADOS ANTES DE CHAMAR O MODEL
 function receberDadosUsuario(){
     $dados = json_decode(file_get_contents("php://input"), true);
 
-    if(!is_array($dados)) {
-        http_response_code(400);
+    if(!is_array($dados)){
+        https_response_code(400);
         echo json_encode([
-            "erro" => "Envie um objeto JSON com os dados do usuário"
+            "erro" => "Envie um objeto JSON com o dados do usuario"
         ]);
         return null;
     }
-        foreach (['nome', 'username', 'email', 'senha'] as $campo){
-        if(!isset($dados[$campo]) || 
-        !is_string($dados[$campo]) ||
-        trim($dados[$campo]) === ''){
-            http_response_code(400);
-            echo json_encode([
-                "erro" =>
-                 "o campo $campo é obrigatório e deve ser um texto não vazio."
-            ]);
-            return null;
-        }
+    foreach(["nome","username","email","senha"] as $campo){
+        if(!isset($dados[$campo]) ||
+            !is_string($dados[$campo]) ||
+            trim($dados[$campo]) === "") {
+                https_response_code(400);
+                echo json_encode([
+                    "erro" =>
+                    "O campo $campo e obrigatorio e deve ser um texto nao vazio"
+                ]);
+                return null
+            }
     }
 
     return $dados;
-    }
+}
 
-    function receberIdUsuario(){
-        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT,
-        ["options" => ["min_range" => 1]]);
-        if($id === false){
-            http_response_code(400);
-            echo json_encode([
-                "erro" => "Informe um id válido para o usuário."
-            ]);
-            return null;
-        }
-        return $id;
-    }
-
-    function createUsuario($con){
-        $dados = receberDadosUsuario();
-        if($dados === null){
-            return;
-        }
-        $id = inserirUsuario($con, $dados);
-        http_response_code(201);
-        echo json_encode([
-            "mensagem" => "Usuário criado com sucesso!",
-            "id_usuario" => $id
+function receberIDUsuario(){
+    $id = filter_var($_GET["id"]  ?? null, FILTER_VALIDATE_INT,
+         ["options" => ["min_range"=> 1]] );
+    if($id === false){
+        http_response_code(400);
+        echo_json_encode([
+            "erro" => "Informe um id de usuario valido"
         ]);
+        return null;
     }
-    function readUsuario($con){
-        echo json_encode(listarUsuarios($con));
-    }    
+    return $id;
+}
+
+function createUsuario($con){
+    $dados = receberDadosUsuario();
+    if($dados === null) return;
+
+    $id = inserirUsuario($con, $dados);
+    http_response_code(201);
+    echo json_encode([
+        "mensagem" => "Usuario criado com sucesso!",
+        "id_usuario" => $id
+    ]);
+}
+function readUsuario($con){
+    echo json_encode(listarUsuario($con));
+    }
     function updateUsuario($con){
-        $id = receberIdUsuario();
-        if($id === null){
+        $id = receberIDUsuario();
+        if($id === null) {
             return;
-        }
-        atualizarUsuario($con, $id, $dados());
-        echo json_encode([
-            "mensagem" => "Senha alterada com sucesso!"
-        ]);
     }
-    function deleteUsuario($con){
-        $id = receberIdUsuario();
-        if($id === null){
-            return;
-        }
-        removerUsuario($con, $id);
-        echo json_encode([
-            "mensagem" => "Cliente removido com sucesso!"
-        ]);
-    }
-    
-       
+    $dados = receberDadosUsuario();
+    atualizarUsuario($con, $id, $dados);
+    echo json_encode([
+        "mensagem" => "Senha atualizado com sucesso!"
+    ]);
+
+}
+function deleteUsuario($con){
+    $id = receberIDUsuario();
+    if($id === null)
+         return;
+}
