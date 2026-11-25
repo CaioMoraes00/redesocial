@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - FutSocial</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="pagina-login">
+
+    <div class="login-container">
+
+        <div class="login-logo">
+            <h1>Fut<span>Social</span></h1>
+            <p>Sua paixão pelo futebol em um só lugar.</p>
+        </div>
+
+        <div class="login-box">
+
+            <h2>Bem-vindo de volta!</h2>
+
+            <p class="subtitulo">
+                Entre na sua conta para acompanhar o mundo do futebol.
+            </p>
+
+            <form action="index.php" method="GET">
+
+                <div class="campo">
+                    <label for="nome">Nome completo</label>
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        placeholder="Digite seu nome completo"
+                        required>
+                </div>
+
+                <div class="campo">
+                    <label for="email">E-mail</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Digite seu e-mail"
+                        required>
+                </div>
+
+                <div class="campo">
+                    <label for="senha">Senha</label>
+                    <input
+                        type="password"
+                        id="senha"
+                        name="senha"
+                        placeholder="Digite sua senha"
+                        required>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    Entrar na conta
+                </button>
+
+            </form>
+
+        </div>
+
+        <footer class="login-footer">
+            <p>© 2026 FutSocial - Todos os direitos reservados.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
+
+
